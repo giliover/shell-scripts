@@ -4,12 +4,8 @@
 
 ```sh
 #!/bin/bash
-if [ $1 == "--install-arch-linux" ]; then
-    echo "Installing wine and winetricks"
-    echo "Case installed (Ctrl + C)"
-    trizen -S --noconfirm wine winetricks && echo "Completed wine and" || echo "Wine and winetricks not installed";
 
-
+install() {
     # scriptdir variable
     scriptdir=`dirname "$BASH_SOURCE"`
 
@@ -36,16 +32,30 @@ if [ $1 == "--install-arch-linux" ]; then
     fi 
     
     echo "End"
+}
+
+
+if [ $1 == "--install-arch-linux" ]; then
+    echo "Installing wine and winetricks"
+    echo "Case installed (Ctrl + C)"
+    trizen -S --noconfirm wine winetricks && install || echo "Wine and winetricks not installed";
 fi
 
-#!/bin/bash
 if [ $1 == "--start" ]; then
-    echo "Running the Rosetta Stone "
+    echo "Starting the Rosetta Stone "
 
     WINEPREFIX=~/.wine-rosetta WINEARCH=win32 wine ~/.wine-rosetta/drive_c/Program\ Files/Rosetta\ Stone/Rosetta\ Stone\ Language\ Training/Rosetta\ Stone.exe
     
     echo "End"
-fi'
+fi
+
+if [ $1 == "--install" ]; then
+    echo "Starting the Rosetta Stone "
+   
+
+    install || echo "Make sure the wine and winetricks are installed"
+    echo "End"
+fi
 ```
 
 <br>
@@ -71,5 +81,18 @@ $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
 # SCRIPTS = ~/path/to/script/repository 
 
 $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
+
+```
+
+<br>
+<label>↪Running on your <strong>any linux:</strong></label>
+
+<br>
+<br>
+
+```sh
+# SCRIPTS = ~/path/to/script/repository 
+
+$SCRIPTS/wine/rosetta-stone.sh --install
 
 ```

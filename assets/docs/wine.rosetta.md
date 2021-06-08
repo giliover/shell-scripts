@@ -80,7 +80,7 @@ $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
 ```sh
 # SCRIPTS=~/path/to/script/repository 
 
-$SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
+$SCRIPTS/wine/rosetta-stone.sh --start
 
 ```
 

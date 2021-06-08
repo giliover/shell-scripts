@@ -1,0 +1,48 @@
+LEIA CUIDADOSAMENTE ANTES DE INSTALAR.
+
+- Uma vez instalado e lançado (ver procedimento de instalação), a aplicação irá se conectar à internet imediatamente.
+- Se o seu firewall estiver no modo interativo NÃO bloquear o acesso INTERNET com ele.
+
+--------------------------------------------------------------------------------------
+Antes da instalação do software adicione as seguintes linhas ao seu arquivo hosts:
+
+#16.217.0.0 = *.ip.att.net
+127.0.0.1 16.217.0.0
+127.0.0.1 rosettastone.com
+127.0.0.1 launch.rosettastone.com
+127.0.0.1 amp.rosettastone.com
+127.0.0.1 resources.rosettastone.com
+127.0.0.1 updates.rosettastone.com
+
+Para fazer isso, vá para "C:\Windows\System32\drivers\etc" e edite o arquivo 'hosts' com qualquer editor de texto. Adicione as linhas mencionadas acima e salve o arquivo.
+
+ATENÇÃO: Após adicionar as linhas mencionadas acima no arquivo "hosts" você não conseguirá fazer o download dos pacotes de idiomas pelo link direto do servidor da Rosetta Stone. Sempre que você quiser fazer o download de outros language packs pelo link direto do servidor da Rosetta Stone você deve remover aquelas linhas do arquivo hosts e fazer o download dos languages packs pelo link direto. Após o término do download insira novamente as linhas no arquivo hosts.
+Não abra o programa sem aquelas linhas de bloqueio estarem inseridas no arquivo hosts.
+-------------------------------------------------------------------------------------
+
+Procedimento de instalação
+
+1. Execute a instalação, e NÃO inicie o aplicativo
+2. Execute atualização, e NÃO inicie o aplicativo
+3. Copie e substitua arquivos crackeados na pasta do programas C:\Program files (x86)\Rosetta Stone\Rosetta Stone Language Training
+
+Agora você pode iniciar o aplicativo, confirmar as advertências relativas à conexão segura e certificado (clique em Sim ou em ambos os casos ele não irá carregar).
+-------------------------------------------------------------------------------------
+
+Agora vamos instalar um curso
+
+Feche o aplicativo e copie (ou mova) o curso desejado (arquivo .rsd) para:
+
+- Windows XP: %Documents and Settings%\All Users\Application Data\Rosetta Stone\Language Training\AutoInstall
+
+- Windows 7: C:\ProgramData\Rosetta Stone\Language Training\AutoInstall
+
+- Windows 8: C:\ProgramData\Rosetta Stone\Language Training\AutoInstall
+
+Inicie o aplicativo, ele irá detectar o arquivo rsd e instalá-lo.
+Uma vez instalado, o arquivo arquivo .rsd será automaticamente transferido para subpasta Installed na pasta acima mencionada.
+Uma janela irá aparecer pedindo um número de série, ignorar o aviso.
+
+Repita o procedimento com a atualização relevante.
+
+ ... Comece a aprender!

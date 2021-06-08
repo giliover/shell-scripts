@@ -65,7 +65,7 @@ fi
 <br>
 
 ```sh
-# SCRIPTS = ~/path/to/script/repository 
+# SCRIPTS=~/path/to/script/repository 
 
 $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
 
@@ -78,7 +78,7 @@ $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
 <br>
 
 ```sh
-# SCRIPTS = ~/path/to/script/repository 
+# SCRIPTS=~/path/to/script/repository 
 
 $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
 
@@ -91,7 +91,7 @@ $SCRIPTS/wine/rosetta-stone.sh --install-arch-linux
 <br>
 
 ```sh
-# SCRIPTS = ~/path/to/script/repository 
+# SCRIPTS=~/path/to/script/repository 
 
 $SCRIPTS/wine/rosetta-stone.sh --install
 

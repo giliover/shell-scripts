@@ -6,7 +6,10 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-PROJECT_NAME=$1
+
+PROJECT_NAME=$(echo "$1" | awk -F',' '{print $1}')
+
+LANGUAGE=$(echo "$1" | awk -F',' '{print $2}')
 
 # Cria o diretório do projeto e entra nele
 mkdir -p $PROJECT_NAME
@@ -14,4 +17,14 @@ cd $PROJECT_NAME
 
 # Cria o projeto React no diretório atual
 echo "Criando o projeto React no diretório $PROJECT_NAME..."
-docker run --rm -v $(pwd):/app -w /app node:current-alpine npx create-react-app .
+case $LANGUAGE in
+  'ts')
+   docker run --rm -v $(pwd):/app -w /app node:current-alpine npx create-react-app . --template typescript
+    ;;
+  "js")
+   docker run --rm -v $(pwd):/app -w /app node:current-alpine npx create-react-app .
+    ;;
+  *)
+    echo "Opção Inválida!"
+    ;;
+esac

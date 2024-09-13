@@ -49,8 +49,9 @@ create_setup_start(){
   echo "Informe o nome do projeto React:"
   read PROJECT_NAME
   ./create-react-project.sh $PROJECT_NAME,$1 
-  ./create-dockerfiles.sh $PROJECT_NAME,$1
-  ./start-development.sh $PROJECT_NAME,$1
+  ./create-dockerfiles.sh $PROJECT_NAME
+  ./start-development.sh $PROJECT_NAME
+  exit 0
 }
 
 

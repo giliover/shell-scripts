@@ -11,18 +11,14 @@ PROJECT_NAME=$(echo "$1" | awk -F',' '{print $1}')
 
 LANGUAGE=$(echo "$1" | awk -F',' '{print $2}')
 
-# Cria o diretório do projeto e entra nele
-mkdir -p $PROJECT_NAME
-cd $PROJECT_NAME
-
 # Cria o projeto React no diretório atual
 echo "Criando o projeto React no diretório $PROJECT_NAME..."
 case $LANGUAGE in
   'ts')
-   docker run --rm -v $(pwd):/app -w /app node:current-alpine npx create-react-app . --template typescript
+   docker run --rm -v $(pwd):/app -w /app node:current-alpine sh -c "apk add git && npx create-react-app $PROJECT_NAME --template typescript"
     ;;
   "js")
-   docker run --rm -v $(pwd):/app -w /app node:current-alpine npx create-react-app .
+   docker run --rm -v $(pwd):/app -w /app node:current-alpine sh -c "apk add git && npx create-react-app $PROJECT_NAME"
     ;;
   *)
     echo "Opção Inválida!"

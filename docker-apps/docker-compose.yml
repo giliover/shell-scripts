@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  giliover-streamlink:
+    container_name: giliover-streamlink
+    image: giliover-streamlink
+    stdin_open: true
+    tty: true
+    privileged: true
+    environment:
+      - DISPLAY=:0
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+    build:
+      context: .
+      dockerfile: ./Dockerfile.streamlink
+    network_mode: "host"        
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/pulse:/run/user/1000/pulse
+      - /dev/snd:/dev/snd
+    devices:
+      - /dev/snd
+    restart: always
+  giliover-chromium:
+    container_name: giliover-chromium
+    image: giliover-chromium
+    stdin_open: true
+    tty: true
+    privileged: true
+    environment:
+      - DISPLAY=:0
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+    build:
+      context: .
+      dockerfile: ./Dockerfile.chromium
+    network_mode: "host"        
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/pulse:/run/user/1000/pulse
+      - /dev/snd:/dev/snd
+    devices:
+      - /dev/snd
+    restart: no
+  giliover-session:
+    container_name: giliover-session
+    image: giliover-session
+    stdin_open: true
+    privileged: true
+    tty: true
+    environment:
+      - DISPLAY=:0
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+    build:
+      context: .
+      dockerfile: ./Dockerfile.session
+    network_mode: "host"        
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/1000/pulse:/run/user/1000/pulse
+      - /dev/snd:/dev/snd
+    devices:
+      - /dev/snd
+    restart: always

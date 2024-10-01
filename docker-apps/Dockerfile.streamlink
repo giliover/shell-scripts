@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+
+ENV UNAME=ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://br.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
+
+RUN apt-get update && apt-get install -y \
+    streamlink \
+    dbus-x11 
+
+COPY entrypoint.streamlink.sh /entrypoint.streamlink.sh
+COPY streamlink-users.json /users.json
+
+USER $UNAME

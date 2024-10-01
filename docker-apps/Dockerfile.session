@@ -1,0 +1,29 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    software-properties-common \
+    apt-transport-https \
+    --no-install-recommends
+
+
+COPY entrypoint.session.sh /entrypoint.session.sh
+
+RUN curl -s https://deb.oxen.io/pub.gpg | apt-key add -
+
+RUN echo "deb [arch=amd64] https://deb.oxen.io $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/session-messenger.list
+
+RUN apt-get update && apt-get install -y session-desktop
+
+RUN apt-get update
+
+RUN apt-get install -y sudo libgbm1 libdrm2 libasound2-plugins libasound2-data
+
+RUN echo 'ubuntu:yourpassword' | chpasswd
+
+RUN usermod -a -G sudo ubuntu 
+
+USER ubuntu
+
+ENTRYPOINT ["/entrypoint.session.sh"]

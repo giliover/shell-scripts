@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg2 \
+    software-properties-common \
+    apt-transport-https \
+    --no-install-recommends
+
+COPY entrypoint.chromium.sh /entrypoint.chromium.sh
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131
+
+RUN echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list.d/debian-unstable.list
+
+RUN apt-get update && apt-get install -y -t unstable chromium
+
+RUN rm /etc/apt/sources.list.d/debian-unstable.list
+
+RUN apt-get update
+
+USER ubuntu
+
+ENTRYPOINT ["/entrypoint.chromium.sh"]

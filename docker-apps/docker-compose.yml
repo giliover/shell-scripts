@@ -76,6 +76,7 @@ services:
     network_mode: "host"        
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./database.keepassxc:/home/ubuntu/config
       - /run/user/1000/pulse:/run/user/1000/pulse
       - /dev/snd:/dev/snd
     devices:

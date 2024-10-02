@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://br.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
+
+RUN apt-get update && apt-get install -y keepassxc
+
+COPY entrypoint.keepassxc.sh /entrypoint.keepassxc.sh
+
+RUN chmod +x entrypoint.keepassxc.sh
+
+RUN echo 'ubuntu:yourpassword' | chpasswd
+
+USER ubuntu
+
+ENTRYPOINT ["/entrypoint.keepassxc.sh"]

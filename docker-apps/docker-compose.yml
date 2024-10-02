@@ -8,7 +8,7 @@ services:
     tty: true
     privileged: true
     environment:
-      - DISPLAY=:0
+      - DISPLAY=${DISPLAY}
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     build:
       context: .
@@ -28,7 +28,7 @@ services:
     tty: true
     privileged: true
     environment:
-      - DISPLAY=:0
+      - DISPLAY=${DISPLAY}
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     build:
       context: .
@@ -48,7 +48,7 @@ services:
     privileged: true
     tty: true
     environment:
-      - DISPLAY=:0
+      - DISPLAY=${DISPLAY}
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     build:
       context: .
@@ -61,3 +61,26 @@ services:
     devices:
       - /dev/snd
     restart: always
+  searxng:
+    container_name: searxng
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    networks:
+      - searxng
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"

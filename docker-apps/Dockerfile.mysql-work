@@ -1,0 +1,33 @@
+FROM ubuntu:latest
+
+ENV UNAME=ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://br.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    dbus-x11 \
+    lsb-release \
+    gnupg
+
+RUN wget https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
+
+RUN dpkg -i mysql-apt-config_0.8.24-1_all.deb
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C
+
+RUN apt update 
+
+RUN apt install -y mysql-workbench-community libgck-1-0  libgcr-base-3-1 gcr p11-kit pinentry-gnome3
+
+COPY entrypoint.mysql-work.sh /entrypoint.mysql-work.sh
+
+RUN wget http://gr.archive.ubuntu.com/ubuntu/pool/main/g/gnome-keyring/gnome-keyring_46.1-2build1_amd64.deb
+
+RUN dpkg -i gnome-keyring_46.1-2build1_amd64.deb
+
+RUN chmod +x entrypoint.mysql-work.sh
+
+ENTRYPOINT ["/entrypoint.mysql-work.sh"]
+

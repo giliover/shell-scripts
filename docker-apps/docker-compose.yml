@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   giliover-streamlink:
@@ -13,51 +13,32 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.streamlink
-    network_mode: "host"        
+    network_mode: "host"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /run/user/1000/pulse:/run/user/1000/pulse
       - /dev/snd:/dev/snd
     devices:
       - /dev/snd
-    restart: always
-  giliover-firefox:
-    container_name: giliover-firefox
-    image: giliover-firefox
+    restart: no
+  giliover-mysql-work:
+    container_name: giliover-mysql-work
+    image: giliover-mysql-work
+    privileged: true
     stdin_open: true
     tty: true
-    privileged: true
     environment:
       - DISPLAY=${DISPLAY}
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     build:
       context: .
-      dockerfile: ./Dockerfile.firefox
-    network_mode: "host"        
+      dockerfile: ./Dockerfile.mysql-work
+    network_mode: "host"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /run/user/1000/pulse:/run/user/1000/pulse
-      - /dev/snd:/dev/snd
-    devices:
-      - /dev/snd
-    restart: always
-  giliover-chromium:
-    container_name: giliover-chromium
-    image: giliover-chromium
-    stdin_open: true
-    tty: true
-    privileged: true
-    environment:
-      - DISPLAY=${DISPLAY}
-      - PULSE_SERVER=unix:/run/user/1000/pulse/native
-    build:
-      context: .
-      dockerfile: ./Dockerfile.chromium
-    network_mode: "host"        
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /run/user/1000/pulse:/run/user/1000/pulse
-      - /dev/snd:/dev/snd
+      - ~/config:/config
+      - ~/.mysql:/home/root/.mysql
     devices:
       - /dev/snd
     restart: no
@@ -73,7 +54,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.session
-    network_mode: "host"        
+    network_mode: host
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /run/user/1000/pulse:/run/user/1000/pulse
@@ -93,7 +74,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.keepassxc
-    network_mode: "host"        
+    network_mode: "host"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./database.keepassxc:/home/ubuntu/config
@@ -101,12 +82,11 @@ services:
       - /dev/snd:/dev/snd
     devices:
       - /dev/snd
-    restart: always
-  searxng:
-    container_name: searxng
+    restart: no
+  giliover-searxng:
+    container_name: giliover-searxng
     image: docker.io/searxng/searxng:latest
     restart: unless-stopped
-    network_mode: host
     volumes:
       - ./searxng:/etc/searxng:rw
     environment:

@@ -188,16 +188,15 @@ outgoing:
   # are also supported: see
   #   https://2.python-requests.org/en/latest/user/advanced/#socks
   #
-  #  proxies:
-  #    all://:
-  #      - http://proxy1:8080
-  #      - http://proxy2:8080
-  #
-  #  using_tor_proxy: true
+  # proxies:
+  #  all://:
+  #    - socks5h://127.0.0.1:9050
+  # using_tor_proxy: true
+
   #
   # Extra seconds to add in order to account for the time taken by the proxy
   #
-  #  extra_proxy_timeout: 10
+  extra_proxy_timeout: 60
   #
   # uncomment below section only if you have more than one network interface
   # which can be the source of outgoing search requests
@@ -217,21 +216,21 @@ outgoing:
 
 # Comment or un-comment plugin to activate / deactivate by default.
 #
-# enabled_plugins:
+enabled_plugins:
 #   # these plugins are enabled if nothing is configured ..
-#   - 'Basic Calculator'
-#   - 'Hash plugin'
-#   - 'Self Information'
-#   - 'Tracker URL remover'
-#   - 'Ahmia blacklist'  # activation depends on outgoing.using_tor_proxy
+  - 'Basic Calculator'
+  - 'Hash plugin'
+  - 'Self Information'
+  - 'Tracker URL remover'
+  - 'Ahmia blacklist'  # activation depends on outgoing.using_tor_proxy
 #   # these plugins are disabled if nothing is configured ..
-#   - 'Hostnames plugin'  # see 'hostnames' configuration below
-#   - 'Open Access DOI rewrite'
-#   - 'Tor check plugin'
+  - 'Hostnames plugin'  # see 'hostnames' configuration below
+  - 'Open Access DOI rewrite'
+  - 'Tor check plugin'
 #   # Read the docs before activate: auto-detection of the language could be
 #   # detrimental to users expectations / users can activate the plugin in the
 #   # preferences if they want.
-#   - 'Autodetect search language'
+  - 'Autodetect search language'
 
 # Configuration of the "Hostnames plugin":
 #
@@ -863,14 +862,10 @@ engines:
     timeout: 4.0
     disabled: true
 
-  - name: google
-    engine: google
-    shortcut: go
-    # additional_tests:
-    #   android: *test_android
 
   - name: google images
     engine: google_images
+    disabled: false
     shortcut: goi
     # additional_tests:
     #   android: *test_android
@@ -883,18 +878,28 @@ engines:
 
   - name: google news
     engine: google_news
+    disabled: false
     shortcut: gon
+    # additional_tests:
+    #   android: *test_android
+
+  - name: google
+    engine: google
+    disabled: false
+    shortcut: go
     # additional_tests:
     #   android: *test_android
 
   - name: google videos
     engine: google_videos
+    disabled: false
     shortcut: gov
     # additional_tests:
     #   android: *test_android
 
   - name: google scholar
     engine: google_scholar
+    disabled: false
     shortcut: gos
 
   - name: google play apps

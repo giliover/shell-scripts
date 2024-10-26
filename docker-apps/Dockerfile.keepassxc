@@ -2,7 +2,12 @@ FROM ubuntu:latest
 
 RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://br.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
 
-RUN apt-get update && apt-get install -y keepassxc
+RUN apt-get update && apt-get install -y keepassxc \
+	qtbase5-dev \
+	qtbase5-dev-tools \
+	qtdeclarative5-dev \
+	qttools5-dev \
+	qttools5-dev-tools
 
 COPY entrypoint.keepassxc.sh /entrypoint.keepassxc.sh
 

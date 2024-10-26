@@ -9,7 +9,12 @@ RUN apt-get update && apt-get install -y \
     wget \
     dbus-x11 \
     lsb-release \
-    gnupg
+    gnupg \
+    qtbase5-dev \ 
+    qtbase5-dev-tools \
+    qtdeclarative5-dev \
+    qttools5-dev \
+    qttools5-dev-tools
 
 RUN wget https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
 

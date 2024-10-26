@@ -1,24 +1,29 @@
-FROM ubuntu:latest
+FROM debian:latest
 
-RUN apt-get update && apt-get install -y \
-    wget \
-    gnupg2 \
-    software-properties-common \
-    apt-transport-https \
-    --no-install-recommends
+ENV UNAME=giliover
 
 COPY entrypoint.chromium.sh /entrypoint.chromium.sh
 
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131
+RUN useradd giliover --password 12345678
 
-RUN echo "deb http://deb.debian.org/debian unstable main" > /etc/apt/sources.list.d/debian-unstable.list
-
-RUN apt-get update && apt-get install -y -t unstable chromium
-
-RUN rm /etc/apt/sources.list.d/debian-unstable.list
+RUN chmod +x /entrypoint.chromium.sh
 
 RUN apt-get update
 
-USER ubuntu
+RUN apt-get install -y wget \
+    qtbase5-dev \
+    qtbase5-dev-tools \
+    qtdeclarative5-dev \
+    qttools5-dev \
+    qttools5-dev-tools
+
+
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+RUN chmod +x google-chrome-stable_current_amd64.deb
+
+RUN apt-get install -f ./google-chrome-stable_current_amd64.deb
+
+USER $UNAME
 
 ENTRYPOINT ["/entrypoint.chromium.sh"]

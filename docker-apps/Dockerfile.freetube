@@ -1,0 +1,23 @@
+FROM ubuntu:latest
+
+ENV UNAME=ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /home/ubuntu
+
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://br.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources
+
+RUN apt update && apt install -y wget libasound2-plugins libasound2-data
+
+RUN wget https://github.com/FreeTubeApp/FreeTube/releases/download/v0.21.3-beta/freetube_0.21.3_amd64.deb
+
+RUN apt install -y -f ./freetube_0.21.3_amd64.deb
+
+COPY entrypoint.freetube.sh entrypoint.freetube.sh
+
+RUN chmod +x entrypoint.freetube.sh
+
+USER $UNAME
+
+CMD ["./entrypoint.freetube.sh"]
+

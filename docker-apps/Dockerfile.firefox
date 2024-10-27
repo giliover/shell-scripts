@@ -17,4 +17,4 @@ RUN wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-lates
     ln -s /opt/firefox/firefox /usr/bin/firefox && \
     rm firefox.tar.bz2
 
-ENTRYPOINT ["/entrypoint.firefox.sh"]
+CMD ["/entrypoint.firefox.sh"]

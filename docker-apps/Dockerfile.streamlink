@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-ENV UNAME=giliover
+ENV UNAME=ubuntu
 ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /home/ubuntu
@@ -38,6 +38,11 @@ RUN wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-lates
     ln -s /opt/firefox/firefox /usr/bin/firefox && \
     rm firefox.tar.bz2
 
-USER $UNAME
+RUN apt install -y curl
 
-ENTRYPOINT ["./entrypoint.streamlink.sh"]
+RUN mkdir -p /home/ubuntu/.local/share/streamlink/plugins
+RUN curl -L -o "/home/ubuntu/.local/share/streamlink/plugins/twitch.py" 'https://github.com/2bc4/streamlink-ttvlol/releases/latest/download/twitch.py'
+
+USER ubuntu
+
+CMD ["./entrypoint.streamlink.sh"]

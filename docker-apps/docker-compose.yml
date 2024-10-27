@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   giliover-streamlink:
     container_name: giliover-streamlink
@@ -8,7 +6,6 @@ services:
     tty: true
     privileged: true
     environment:
-      - QT_QPA_PLATFORM=xcb
       - DISPLAY=${DISPLAY}
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     build:
@@ -20,31 +17,31 @@ services:
       - /run/user/1000/pulse:/run/user/1000/pulse
       - /dev/snd:/dev/snd
       - /home/giliover/.mozilla:/home/ubuntu/.mozilla  # Montando o diretório do perfil do Firefox
-    user: ${UID}:${GID}
+      - /home/giliover/.mozilla:/root/.mozilla  # Montando o diretório do perfil do Firefox
     devices:
       - /dev/snd
     restart: no
-  giliover-mysql-work:
-    container_name: giliover-mysql-work
-    image: giliover-mysql-work
-    privileged: true
-    stdin_open: true
-    tty: true
-    environment:
-      - DISPLAY=${DISPLAY}
-      - PULSE_SERVER=unix:/run/user/1000/pulse/native
-    build:
-      context: .
-      dockerfile: ./Dockerfile.mysql-work
-    network_mode: "host"
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /run/user/1000/pulse:/run/user/1000/pulse
-      - ~/config:/config
-      - ~/.mysql:/home/root/.mysql
-    devices:
-      - /dev/snd
-    restart: no
+#  giliover-mysql-work:
+#    container_name: giliover-mysql-work
+#    image: giliover-mysql-work
+#    privileged: true
+#    stdin_open: true
+#    tty: true
+#    environment:
+#      - DISPLAY=${DISPLAY}
+#      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile.mysql-work
+#    network_mode: "host"
+#    volumes:
+#      - /tmp/.X11-unix:/tmp/.X11-unix
+#      - /run/user/1000/pulse:/run/user/1000/pulse
+#      - ~/config:/config
+#      - ~/.mysql:/home/root/.mysql
+#    devices:
+#      - /dev/snd
+#    restart: no
   giliover-session:
     container_name: giliover-session
     image: giliover-session
@@ -106,9 +103,9 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
-  giliover-chromium:
-    container_name: giliover-chromium
-    image: giliover-chromium
+  giliover-freetube:
+    container_name: giliover-freetube
+    image: giliover-freetube
     stdin_open: true
     privileged: true
     tty: true
@@ -117,10 +114,11 @@ services:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
     build:
       context: .
-      dockerfile: ./Dockerfile.chromium
+      dockerfile: ./Dockerfile.freetube
     network_mode: "host"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - /home/giliover/.config:/home/ubuntu/.config
       - /run/user/1000/pulse:/run/user/1000/pulse
       - /dev/snd:/dev/snd
     devices:

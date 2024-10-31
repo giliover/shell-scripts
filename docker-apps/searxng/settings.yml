@@ -35,6 +35,9 @@ search:
   autocomplete: ""
   # minimun characters to type before autocompleter starts
   autocomplete_min: 4
+  # backend for the favicon near URL in search results.
+  # Available resolvers: "allesedv", "duckduckgo", "google", "yandex" - leave blank to turn it off by default.
+  favicon_resolver: ""
   # Default search language - leave blank to detect from browser information or
   # use codes from 'languages.py'
   default_lang: "auto"
@@ -88,7 +91,7 @@ server:
   # If your instance owns a /etc/searxng/settings.yml file, then set the following
   # values there.
 
-  secret_key: "fd9dbdb913d6f7a9c39579dd5218e742b04301aab536fd0592b5ff470c47edf2"  # Is overwritten by ${SEARXNG_SECRET}
+  secret_key: "da8b4b63c8fb0c5fcc742ce03e27f8ef77ac840a486d807366eb4b04c5915bfd"  # Is overwritten by ${SEARXNG_SECRET}
   # Proxy image results through SearXNG. Is overwritten by ${SEARXNG_IMAGE_PROXY}
   image_proxy: false
   # 1.0 and 1.1 are supported
@@ -188,15 +191,16 @@ outgoing:
   # are also supported: see
   #   https://2.python-requests.org/en/latest/user/advanced/#socks
   #
-  # proxies:
-  #  all://:
-  #    - socks5h://127.0.0.1:9050
-  # using_tor_proxy: true
-
+  #  proxies:
+  #    all://:
+  #      - http://proxy1:8080
+  #      - http://proxy2:8080
+  #
+  #  using_tor_proxy: true
   #
   # Extra seconds to add in order to account for the time taken by the proxy
   #
-  extra_proxy_timeout: 60
+  #  extra_proxy_timeout: 10
   #
   # uncomment below section only if you have more than one network interface
   # which can be the source of outgoing search requests
@@ -216,21 +220,21 @@ outgoing:
 
 # Comment or un-comment plugin to activate / deactivate by default.
 #
-enabled_plugins:
+# enabled_plugins:
 #   # these plugins are enabled if nothing is configured ..
-  - 'Basic Calculator'
-  - 'Hash plugin'
-  - 'Self Information'
-  - 'Tracker URL remover'
-  - 'Ahmia blacklist'  # activation depends on outgoing.using_tor_proxy
+#   - 'Basic Calculator'
+#   - 'Hash plugin'
+#   - 'Self Information'
+#   - 'Tracker URL remover'
+#   - 'Ahmia blacklist'  # activation depends on outgoing.using_tor_proxy
 #   # these plugins are disabled if nothing is configured ..
-  - 'Hostnames plugin'  # see 'hostnames' configuration below
-  - 'Open Access DOI rewrite'
-  - 'Tor check plugin'
+#   - 'Hostnames plugin'  # see 'hostnames' configuration below
+#   - 'Open Access DOI rewrite'
+#   - 'Tor check plugin'
 #   # Read the docs before activate: auto-detection of the language could be
 #   # detrimental to users expectations / users can activate the plugin in the
 #   # preferences if they want.
-  - 'Autodetect search language'
+#   - 'Autodetect search language'
 
 # Configuration of the "Hostnames plugin":
 #
@@ -862,10 +866,14 @@ engines:
     timeout: 4.0
     disabled: true
 
+  - name: google
+    engine: google
+    shortcut: go
+    # additional_tests:
+    #   android: *test_android
 
   - name: google images
     engine: google_images
-    disabled: false
     shortcut: goi
     # additional_tests:
     #   android: *test_android
@@ -878,28 +886,18 @@ engines:
 
   - name: google news
     engine: google_news
-    disabled: false
     shortcut: gon
-    # additional_tests:
-    #   android: *test_android
-
-  - name: google
-    engine: google
-    disabled: false
-    shortcut: go
     # additional_tests:
     #   android: *test_android
 
   - name: google videos
     engine: google_videos
-    disabled: false
     shortcut: gov
     # additional_tests:
     #   android: *test_android
 
   - name: google scholar
     engine: google_scholar
-    disabled: false
     shortcut: gos
 
   - name: google play apps
@@ -1284,6 +1282,12 @@ engines:
       use_official_api: false
       require_api_key: false
       results: JSON
+
+  - name: openlibrary
+    engine: openlibrary
+    shortcut: ol
+    timeout: 5
+    disabled: true
 
   - name: openmeteo
     engine: open_meteo
@@ -2035,6 +2039,16 @@ engines:
   #    limit: 10
   #    query_str: 'SELECT * from mytable WHERE fieldname=%(query)s'
   #    shortcut: mysql
+
+  # Required dependency: mariadb
+  #  - name: mariadb
+  #    engine: mariadb_server
+  #    database: mydatabase
+  #    username: user
+  #    password: pass
+  #    limit: 10
+  #    query_str: 'SELECT * from mytable WHERE fieldname=%(query)s'
+  #    shortcut: mdb
 
   - name: 1337x
     engine: 1337x
